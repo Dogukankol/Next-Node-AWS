@@ -1,0 +1,120 @@
+.modal {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 9998;
+    justify-content: center;
+    align-items: center;
+
+    &__mask {
+        background: #253342;
+        width: 100%;
+        height: 100%;
+        opacity: 0.9;
+        position: absolute;
+    }
+
+    &__show {
+        display: flex;
+    }
+
+    &__content {
+        max-width: 570px;
+        max-height: 90%;
+        @include borderRadius(16px);
+        background: $white;
+        z-index: 9;
+        padding: 40px;
+        position: relative;
+        overflow: auto;
+
+        h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            font-size: 14px;
+            margin-bottom: 23px;
+        }
+
+        .button__modal-close {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+
+            i::before {
+                font-size: 32px;
+            }
+        }
+    }
+
+    &-service {
+        hr {
+            border: 1px solid #f3f4f6;
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+        &__criteria {
+            padding: 16px;
+            border-radius: 16px;
+            background-color: $pale-grey;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            div {
+                padding-right: 5px;
+                h4 {
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin-top: 0;
+                    margin-bottom: 12px;
+                }
+
+                p {
+                    font-size: 14px;
+                }
+            }
+
+            .button {
+                width: 144px;
+                min-width: 144px;
+
+                @include phone {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    &__footer {
+        margin-top: 16px;
+    }
+
+    &-cong {
+
+        .modal__header {
+            text-align: center;
+
+            i {
+                &::before {
+                    font-size: 48px;
+                    color: $success;
+                }
+            }
+        }
+        h3 {
+            margin-top: 24px;
+            &+p {
+                margin: 16px 0 24px;
+            }
+        }
+
+
+    }
+
+}
