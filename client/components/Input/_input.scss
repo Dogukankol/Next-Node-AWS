@@ -1,0 +1,37 @@
+.input {
+    position: relative;
+    label {
+        display: block;
+        font-size: rem(12px);
+        margin-bottom: rem(8px);
+        font-weight: 500;
+    }
+
+    input {
+        width: 100%;
+        border: 2px solid $black-medium-grey;
+        padding:  rem(17px) rem(15px);
+        @include borderRadius(10px);
+        font-weight: 500;
+    }
+
+    .anticon {
+        position: absolute;
+        bottom: 19px;
+        right: 16px;
+        display: none;
+    }
+
+    &--error {
+        input {
+            border-color: $error;
+        }
+        .anticon {
+            display: block;
+
+            svg {
+                fill: $error
+            }
+        }
+    }
+}

@@ -1,5 +1,8 @@
 .header {
     height: 110px;
+    @include boxShadow(0 3px 5px 0 rgba(142, 159, 173, 0.2));
+    position: relative;
+    z-index: 9;
 
     .container {
         display: flex;
