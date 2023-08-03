@@ -1,0 +1,28 @@
+.header {
+    height: 110px;
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+    }
+
+    nav {
+        a {
+            font-size: rem(16px);
+            color: $base-dark;
+            font-weight: bold;
+            margin-right: rem(30px);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+    }
+
+    .account {
+        display: flex;
+    }
+}

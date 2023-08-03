@@ -1,0 +1,16 @@
+.logo {
+    display: flex;
+    align-items: stretch;
+    position: relative;
+
+    img {
+        width: 118px!important;
+        max-width: 188px;
+        height: auto!important;
+        position: relative!important;
+
+        @include phone {
+            width: 24px!important;
+        }
+    }
+}

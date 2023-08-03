@@ -1,0 +1,23 @@
+.button {
+  @include borderRadius(5px);
+  @include boxShadow(inset 0 -3px 1px 0 rgba(28, 31, 37, 0.2));
+  padding: rem(12px) 0 rem(17px);
+  min-width: rem(250px);
+  border: 1px solid $pale-grey;
+  background: transparent;
+  cursor: pointer;
+  font-size: rem(16px);
+  font-weight: bold;
+  text-align: center;
+
+  &--primary {
+    background: $blue;
+    color: $white;
+  }
+
+  &--small {
+    padding: rem(7px) 0;
+    min-width: rem(133px);
+    font-size: rem(14px);
+  }
+}
