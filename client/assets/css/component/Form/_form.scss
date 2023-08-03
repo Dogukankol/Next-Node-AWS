@@ -1,18 +1,12 @@
 .form {
     &__group {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-column-gap: 16px;
+        margin-bottom: rem(15px);
         position: relative;
+    }
 
-        &--single {
-            grid-template-columns: 1fr;
-            grid-column-gap: 0;
-        }
-
-        &--column {
-            
-            position: relative;
-        }
+    .button {
+        max-width: 250px;
+        margin: 0 auto;
+        display: block;
     }
 }
