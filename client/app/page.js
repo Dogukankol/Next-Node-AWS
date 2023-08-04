@@ -1,9 +1,7 @@
 import { Button } from '@/components'
+import Blog from './blog/page'
+import {redirect} from 'next/navigation'
 
 export default function Home() {
-  return (
-    <main>
-      <Button text="Gönder" primary />
-    </main>
-  )
+  redirect('/blog')
 }

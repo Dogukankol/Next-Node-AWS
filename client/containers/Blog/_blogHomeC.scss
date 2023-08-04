@@ -1,0 +1,27 @@
+.blog {
+    padding-top: rem(40px);
+    display: grid;
+    grid-template-columns: 780px 380px;
+    grid-column-gap: 20px;
+
+    &__cards {
+        display: grid;
+        grid-template-columns: 380px 380px;
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+    }
+
+    
+    &__most-popular {
+        margin-bottom: 50px;
+
+        @media screen and (max-width: 991px) {
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+    }
+
+    &-card-thumbnail {
+        margin-bottom: 20px;
+    }
+}
