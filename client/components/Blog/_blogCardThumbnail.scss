@@ -1,0 +1,37 @@
+.blog-card-thumbnail {
+    a {
+        display: flex;
+    }
+
+    img {
+        width: 150px;
+        height: 84px;
+        border-radius: 5px;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+
+    &__title {
+        font-size: 16px;
+        color: $base-dark;
+        line-height: normal;
+        font-weight: bold;
+
+        @include phone {
+            font-size: 14px;
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__date {
+        color: $dark-grey;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: normal;
+    }
+}

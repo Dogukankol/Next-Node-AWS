@@ -3,11 +3,12 @@ import Header from './Header';
 import Logo from './Logo';
 import { Tabs, TabSwitcher, TabContent} from './Tabs';
 import { Modals, ModalHeader, ModalBody, ModalFooter, ModalButton} from './Modal';
-import Box1 from './Box/box1';
-import Box2 from './Box/box2';
 import Footer from './Footer';
 import Input from './Input';
 import Error from './Error';
+import BlogCard from './Blog/BlogCard'
+import BlogCardThumbnail from './Blog/BlogCardThumbnail'
+import BlogLatest from './Blog/BlogLatest'
 
 export {
         Button,
@@ -16,8 +17,6 @@ export {
         Tabs,
         TabSwitcher,
         TabContent,
-        Box1,
-        Box2,
         Footer,
         Modals,
         ModalHeader,
@@ -26,4 +25,7 @@ export {
         ModalButton,
         Input,
         Error,
+        BlogCard,
+        BlogCardThumbnail,
+        BlogLatest,
 };
