@@ -5,15 +5,15 @@ import BlogDetailImage from "@/assets/images/blog/Latest-post.webp"
 function BlogDetailC({image, title, description, category, date, href}) {
     return (
 
-        <section class="blog-detail">
-            <div class="container">
-                <div class="blog-detail__content">
-                    <div class="blog__features">
+        <section className="blog-detail">
+            <div className="container">
+                <div className="blog-detail__content">
+                    <div className="blog__features">
                         <span>{date}</span>
                         <span>4 dk okuma</span>
                     </div>
                     <h1>{title}</h1>
-                    <div class="blog__features">
+                    <div className="blog__features">
                         <a href="/" target="_self"><b>{category}</b></a>
                     </div>
 

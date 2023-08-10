@@ -49,7 +49,7 @@ function BlogHome() {
         </div>
       </div>
       <div className="blog__right">
-        <div class="blog__most-popular">
+        <div className="blog__most-popular">
           <h4>En Son Bloglar</h4>
           
           {
@@ -59,7 +59,7 @@ function BlogHome() {
           }
         </div>
 
-        <div class="blog__editors-choice">
+        <div className="blog__editors-choice">
           <h4>Editör Seçimi</h4>
           {
             dummyData.map((item, key) => (

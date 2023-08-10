@@ -8,7 +8,7 @@ function BlogCard({ image, title, description, category, date, href }) {
   return (
     <div className="blog-card">
       <Link href={`${href}`} target="_self" className='blog-card__image'>
-        <Image src={BlogCardImage} alt={title} full />
+        <Image src={BlogCardImage} alt={title} full="true" />
       </Link>
       <div className="blog-card__body">
         <div className="blog-card__features">
