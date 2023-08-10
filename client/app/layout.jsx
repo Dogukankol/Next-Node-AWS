@@ -1,6 +1,8 @@
 import "@/assets/css/styles.scss";
+require('dotenv').config()
 import { Footer, Header } from '@/components';
 
+import { StoreProvider } from "@/stores/store-provider";
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,13 +13,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header />
-        <main>
-          <div className="container">
-            {children}
-          </div>
-        </main>
-        <Footer />
+
+        <StoreProvider>
+          <Header />
+          <main>
+            <div className="container">
+              {children}
+            </div>
+          </main>
+          <Footer />
+        </StoreProvider>
       </body>
     </html>
   )

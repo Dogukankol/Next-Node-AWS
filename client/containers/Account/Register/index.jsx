@@ -1,36 +1,25 @@
 /* eslint-disable */
 "use client"
-import React, { useRef } from 'react'
+import React from 'react'
 import { useForm } from "react-hook-form";
-import { Input, Button, Error } from '@/components'
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import crypto from 'crypto-js';
+import { useDispatch } from 'react-redux';
 
-function Register() {
-    const inputRef = useRef(null);
+import { Input, Button, Error } from '@/components'
+import {store} from '@/stores'
+import { createUser } from "@/stores/register/registerSlice";
 
-    const inputList = [
-        {
-            name: "fullname",
-            label: "Fullname"
-        },
-        {
-            name: "email",
-            label: "Email Address"
-        },
-        {
-            name: "password",
-            label: "Password"
-        },
-        {
-            name: "confirmpassword",
-            label: "Confirm Password"
-        },
-    ]
+
+
+export default function Register() {
+    const dispatch = useDispatch();
 
     const formSchema = Yup.object({
         fullname: Yup.string()
-            .required("Enter your fullname"),
+            .required("Enter your fullname")
+            .min(6, "Your name length should be at least 6 characters"),
         email: Yup.string()
             .email('Enter a valid email')
             .required('Email is required'),
@@ -48,7 +37,13 @@ function Register() {
     const { register, reset, handleSubmit, watch, formState: { errors }, control } = useForm({ resolver: yupResolver(formSchema) });
 
     const onSubmit = (data) => {
-        console.log(data)
+        const hashedPassword = (crypto.AES.encrypt(data.password, process.env.NEXT_PUBLIC_ENV_CRYPTO_KEY).toString())
+        dispatch(createUser({
+            fullname: data.fullname,
+            email: data.email,
+            password: hashedPassword
+        }))
+        // reset();
     }
 
     return (
@@ -81,5 +76,3 @@ function Register() {
         </div>
     )
 }
-
-export default Register
