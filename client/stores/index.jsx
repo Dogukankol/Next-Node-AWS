@@ -7,6 +7,7 @@ export function createStore(preloadedState = {}) {
     reducer: {
       register: registerReducer,
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
     preloadedState,
   });
 

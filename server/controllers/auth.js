@@ -3,7 +3,6 @@ import { SendEmailCommand } from "@aws-sdk/client-ses";
 import { sesClient } from "../libs/sesClient.js";
 
 const createSendEmailCommand = (toAddress, fromAddress, name) => {
-  console.log(toAddress, fromAddress, name)
   return new SendEmailCommand({
     Destination: {
       CcAddresses: [
@@ -38,28 +37,41 @@ const createSendEmailCommand = (toAddress, fromAddress, name) => {
 
 
 export const createUser = async (req, res) => {
-  const { fullname, email, password } = req.body;
+  const userBody = req.body;
+
   const sendEmailCommand = createSendEmailCommand(
-    email, process.env.AWS_EMAIL_SENDER, fullname
+    userBody.email, process.env.AWS_EMAIL_SENDER, userBody.fullname
   );
 
+  await User.findOne({ email: userBody.email }).then(user => {
+    if (user) {
+      return res.status(400).json({
+        error: 'Email is taken'
+      });
+    }
+    
+    const newUser = new User(userBody);
+    try {
+      newUser.save();
+      res.status(201).json(newUser);
+    } catch (error) {
+      res.status(409).json({
+        message: error.message,
+      });
+    }
+  });
 
-  try {
-    return await sesClient.send(sendEmailCommand);
-  } catch (e) {
-    console.error("Failed to send email.", e);
-    return e;
-  }
 
 
-  // const newUser = new User(user);
+
+ 
+
   // try {
-  //   await newUser.save();
-  //   res.status(201).json(newUser);
-  //   console.log(newUser)
-  // } catch (error) {
-  //   res.status(409).json({
-  //     message: error.message,
-  //   });
+  //   return await sesClient.send(sendEmailCommand);
+  // } catch (e) {
+  //   console.error("Failed to send email.", e);
+  //   return e;
   // }
+
+
 };
