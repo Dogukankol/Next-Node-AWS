@@ -7,26 +7,26 @@ import BlogCardImage from '@/assets/images/blog/00_Dashboard_Blog.png'
 function BlogCard({ image, title, description, category, date, href }) {
   return (
     <div className="blog-card">
-      <Link href={`${href}`} target="_self" className='blog-card__image'>
+      <Link href={href} target="_self" className='blog-card__image'>
         <Image src={BlogCardImage} alt={title} full="true" />
       </Link>
       <div className="blog-card__body">
         <div className="blog-card__features">
-          <Link href={`${href}`} target="_self">
+          <Link href={href} target="_self">
             <span>{date}</span>
             <span>5 dk okuma</span>
           </Link>
         </div>
         <h4 className="blog-card__title">
-          <Link href={`${href}`} target="_self">
+          <Link href={href} target="_self">
             {title}
           </Link>
         </h4>
         <div className="blog-card__features">
-          <Link href={`${href}`} target="_self"><b>{category}</b></Link>
+          <Link href={href} target="_self"><b>{category}</b></Link>
         </div>
         <p className="blog-card__description">
-          <Link href={`${href}`} target="_self">
+          <Link href={href} target="_self">
             {description}
           </Link>
         </p>

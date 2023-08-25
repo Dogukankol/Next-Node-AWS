@@ -1,8 +1,9 @@
 import "@/assets/css/styles.scss";
-require('dotenv').config()
 import { Footer, Header } from '@/components';
-
 import { StoreProvider } from "@/stores/store-provider";
+
+require('dotenv').config()
+import NextTopLoader from 'nextjs-toploader';
 
 export const metadata = {
   title: 'Create Next App',
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <NextTopLoader />
 
         <StoreProvider>
           <Header />

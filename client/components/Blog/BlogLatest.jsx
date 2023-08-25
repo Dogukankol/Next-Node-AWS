@@ -7,7 +7,7 @@ function BlogLatest({ title, category, image, href }) {
   return (
 
     <div className="blog__latest">
-      <Link href={`${href}`} target="_self">
+      <Link href={href} target="_self">
         <h4>En Son Bloglar</h4>
         <div className='blog__latest__image'>
           <Image src={BlogLatestImage} alt={title} full="true" />
@@ -16,7 +16,7 @@ function BlogLatest({ title, category, image, href }) {
 
       </Link>
       <div className="blog__features">
-        <Link href={`${href}`} target="_self">
+        <Link href={href} target="_self">
           <b>{category}</b>
         </Link>
         <span>4 dk okuma</span>

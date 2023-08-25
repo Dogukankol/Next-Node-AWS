@@ -10,7 +10,6 @@ export const createUser = createAsyncThunk("register/user", async (data) => {
   return await axios
     .post(`${process.env.NEXT_PUBLIC_ENV_ENDPOINT_URL}/register`, data)
     .then(response => console.log(response))
-    // .catch(error => console.error(error.response.data.error));
 })
 
 export const registerSlice = createSlice({
@@ -23,13 +22,12 @@ export const registerSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(createUser.rejected, (state, action) => {
-        state.existsUser = true
-        console.log(state.existsUser)
+        state.existsUser = true;
       })
   },
 });
 
-export const selectCount = (state) => state.counter.value
+export const selectExistsUser = (state) => state.register.existsUser
 
 
 

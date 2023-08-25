@@ -9,6 +9,7 @@ import Error from './Error';
 import BlogCard from './Blog/BlogCard'
 import BlogCardThumbnail from './Blog/BlogCardThumbnail'
 import BlogLatest from './Blog/BlogLatest'
+import InfoBox from './InfoBox'
 
 export {
         Button,
@@ -28,4 +29,5 @@ export {
         BlogCard,
         BlogCardThumbnail,
         BlogLatest,
+        InfoBox
 };

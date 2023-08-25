@@ -6,7 +6,7 @@ function Button({ text, className, href, disabled, primary, secondary, tertiary,
     return (
         <>
             {href ?
-                <Link href={`${href}`} className={`button ${className ? className : secondary ? "button--secondary" : "button--primary"} ${small ? "button--small" : ""} ${suffix ? suffix : ""}`.trim()}
+                <Link href={href} className={`button ${className ? className : secondary ? "button--secondary" : "button--primary"} ${small ? "button--small" : ""} ${suffix ? suffix : ""}`.trim()}
                     {...disabled ? disabled : ""}
                     {...props}>
                     <span>{text} </span>{icon ? `<i className=${`${icon}`}></i>` : ""}

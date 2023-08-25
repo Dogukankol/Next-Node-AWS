@@ -36,8 +36,9 @@ function Header() {
                         }  
                 </nav>
                 <div className='account'>
-                    <Button href="/account/login" text="Login" suffix="m-r-5" secondary small />
-                    <Button href="/account/register" text="Register" small />
+                    <Link href="/account/login" ><Button text="Login" suffix="m-r-5" secondary small /></Link>
+                    <Link href="/account/register" ><Button  text="Register" small /></Link>
+                    
                 </div>
                 
             </div>

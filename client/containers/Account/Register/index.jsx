@@ -5,16 +5,18 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import crypto from 'crypto-js';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
-import { Input, Button, Error } from '@/components'
-import {store} from '@/stores'
-import { createUser } from "@/stores/register/registerSlice";
+import { Input, Button, Error, InfoBox } from '@/components'
+import { store } from '@/stores'
+import { createUser, selectExistsUser } from "@/stores/register/registerSlice";
 
 
 
 export default function Register() {
     const dispatch = useDispatch();
+    const existsUser = useSelector(selectExistsUser);
 
     const formSchema = Yup.object({
         fullname: Yup.string()
@@ -49,6 +51,7 @@ export default function Register() {
     return (
         <div className='account-page'>
             <form onSubmit={handleSubmit(onSubmit)} className="form">
+                {existsUser && <InfoBox className="m-b-15" text="This mail already exists" icon={<InfoCircleOutlined />}> This mail already exists </InfoBox>}
                 <div className="form__group">
                     <Input label="Fullname" name="fullname" register={register} required className={errors.fullname ? "input--error" : ""} />
                     {errors.fullname && <Error text={errors.fullname?.message} />}
