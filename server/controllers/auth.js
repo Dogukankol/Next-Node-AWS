@@ -1,8 +1,9 @@
-import User from "../models/user.js";
 import { SendEmailCommand } from "@aws-sdk/client-ses";
+import jwt from 'jsonwebtoken'
+import User from "../models/user.js";
 import { sesClient } from "../libs/sesClient.js";
 
-const createSendEmailCommand = (toAddress, fromAddress, name) => {
+const createSendEmailCommand = (toAddress, fromAddress, name, token) => {
   return new SendEmailCommand({
     Destination: {
       CcAddresses: [
@@ -15,7 +16,232 @@ const createSendEmailCommand = (toAddress, fromAddress, name) => {
       Body: {
         Html: {
           Charset: "UTF-8",
-          Data: `<html><body><h1>Hello ${name}</h1 style="color:red;"><p>Test email</p></body></html>`,
+          Data: `
+          <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
+          <head>
+            <title>Hızlı Giriş</title>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <meta name="x-apple-disable-message-reformatting" />
+            <!--[if !mso]><!-->
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <!--<![endif]-->
+            <meta name="color-scheme" content="light dark" />
+            <meta name="supported-color-schemes" content="light dark" />
+            <!--[if mso]>
+            <noscript>
+            <xml>
+                <o:OfficeDocumentSettings>
+                    <o:PixelsPerInch>96</o:PixelsPerInch>
+                </o:OfficeDocumentSettings>
+            </xml>
+            </noscript>
+            <![endif]-->
+            <style>
+              :root {
+                color-scheme: light dark;
+                supported-color-schemes:light dark;
+              }
+              @media (prefers-color-scheme: dark) {
+                body, .body {
+                  background-color: #1a1d21 !important;
+                }
+                .container {
+                  background-color: #272d33 !important; 
+                }
+                .text {
+                  color: #f5f8fa !important;
+                }
+                .dark-img {
+                  display: block !important;
+                }
+                .light-img {
+                  display: none !important;
+                }
+                .corner {
+                  visibility: hidden;
+                }
+              }
+              @media (prefers-color-scheme: light) {
+                .light-img {
+                  display: block !important;
+                  opacity: 1 !important;
+                }
+                table[data-ogsb] .light-img {
+                  display: none !important;
+                  visibility: hidden !important;
+                  opacity: 0 !important;
+                }
+                table[data-ogsb] .dark-img {
+                  display: block !important;
+                }
+                table[data-ogsb] .container {
+                  background-color: #272d33 !important;
+                }
+                table[data-ogsb] .corner img {
+                  display: none !important;
+                }
+              }
+              @media only screen and (max-width: 600px) {
+                .wrapper table {
+                  width: 100% !important;
+                }
+                .h-space,
+                .h-space img {
+                  width: 30px;
+                }
+                .text {
+                  font-size: 1rem;
+                }
+              }
+          </style>
+          </head>
+          
+          <body style="margin: 0; padding: 0; background-color: #f5f8fa;">
+            <div role="article" aria-roledescriptio
+          n="email" lang="en" style="-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;">
+            <table class="wrapper" width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
+              <tbody>
+                <tr>
+                  <td align="center">
+                    <table width="600" cellpadding="0" cellspacing="0" bgcolor="#f5f8fa" class="body" style="table-layout: fixed;">
+                      <tr>
+                        <td width="20" rowspan="7"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" width="20" style="display: block;" /></td>
+                        <td height="50"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" height="50" style="display: block;" /></td>
+                        <td width="20" rowspan="7"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" width="20" style="display: block;" /></td>
+                      </tr>
+                      <tr>
+                        <td height="40"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" height="40" style="display: block;" /></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <table width="100%" cellpadding="0" cellspacing="0" bgcolor="#ffffff" class="container" style="border-radius: 20px;table-layout: fixed;">
+                            <tr>
+                              <td width="20" valign="top" class="corner">
+                                <img style="display: block;" width="20" height="20" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/ctl.png" />
+                              </td>
+                              <td width="65" height="65" valign="top">
+                                <!--[if mso]>
+                                <img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" height="65" width="65" style="display: block;" />
+                                <![endif]-->
+                                <span style="mso-element:field-begin;"></span>
+                                <img style="display: block; opacity: 0;" width="65" height="65" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/corner-light-left@2x.png" class="light-img" />
+                                <div class="dark-img" style="mso-hide: all; display: none; font-size: 0; line-height: 0;">
+                                  <img style="mso-hide: all; display: none;" width="65" height="65" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/corner-dark-left@2x.png" class="dark-img" />
+                                </div>
+                                <span style="mso-element:field-end;"></span>
+                              </td>
+                              <td align="center" valign="bottom" height="65" width="100%">
+                                <table width="100%" height="65" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
+                                  <tr>
+                                    <td height="40" align="center" valign="bottom">
+                                      <img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/logo@2x.jpg" class="light-img" width="118" height="25" style="display: block;" />
+                                      <span style="mso-element:field-begin;"></span>
+                                      <div class="dark-img" style="mso-hide: all; display: none; font-size: 0; line-height: 0;">
+                                        <img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/logo-ultia.svg" class="dark-img" width="118" height="25" style="mso-hide: all; display: none;" />
+                                      </div>
+                                      <span style="mso-element:field-end;"></span>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td height="25" valign="bottom">
+                                      <!--[if mso]>
+                                      <img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" height="25" style="display: block;" />
+                                      <![endif]-->
+                                      <span style="mso-element:field-begin;"></span>
+                                      <img style="display: block; opacity: 0;" width="100%" height="25" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/corner-light-center@2x.png" class="light-img" />
+                                      <div class="dark-img" style="mso-hide: all; display: none; font-size: 0; line-height: 0;">
+                                        <img style="mso-hide: all; display: none;" width="100%" height="25" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/corner-dark-center@2x.png" class="dark-img" />
+                                      </div>
+                                      <span style="mso-element:field-end;"></span>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                              <td width="65" height="65" valign="top">
+                                <!--[if mso]>
+                                <img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" width="65" height="65" style="display: block;" />
+                                <![endif]-->
+                                <span style="mso-element:field-begin;"></span>
+                                <img style="display: block; opacity: 0;" width="65" height="65" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/corner-light-right@2x.png" class="light-img" />
+                                <div class="dark-img" style="mso-hide: all; display: none; font-size: 0; line-height: 0;">
+                                  <img style="mso-hide: all; display: none;" width="100%" height="65" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/corner-dark-right@2x.png" class="dark-img" />
+                                </div>
+                                <span style="mso-element:field-end;"></span>
+                              </td>
+                              <td width="20" valign="top" class="corner">
+                                <img style="display: block;" width="20" height="20" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/ctr.png" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="5" height="30"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" height="30" style="display: block;" /></td>
+                            </tr>
+                            <tr>
+                              <td colspan="5">
+                                <table cellpadding="0" cellspacing="0" width="100%" style="color: #272d33; font-family: Arial; font-size: 14px; text-align: center; line-height: 1.43;table-layout: fixed;" class="text">
+                                  <tr>
+                                    <td width="100" rowspan="4" class="h-space"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" width="100" style="display: block;" /></td>
+                                    <td></td>
+                                    <td width="100" rowspan="4" class="h-space"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" width="100" style="display: block;" /></td>
+                                  </tr>
+                                  <tr>
+                                    <td style="text-align: center;">
+                                      <img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/icon-verify@2x.png" height="90" width="90" />
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td height="30"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" height="30" style="display: block;" /></td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <b>Dear ${name};</b>
+                                      <br />
+                                      <p>You can activate the e-mail address you have provided by clicking the activate button below.</p>
+                                      <br />
+                                      <!--[if mso]>
+                                      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${process.env.CLIENT_URL}/account/verification/${token}" style="height:45px;v-text-anchor:middle;width:250px;" arcsize="67%" stroke="f" fillcolor="#2962ff">
+                                          <w:anchorlock/>
+                                          <center>
+                                      <![endif]-->
+                                        <a href="${process.env.CLIENT_URL}/account/verification/${token}" 
+                                      style="background-color:#2962ff;border-radius:23px;color:#ffffff;display:inline-block;font-family:Arial;font-size:15px;font-weight:bold;line-height:45px; min-width: 250px;text-align:center;text-decoration:none;width:250px;-webkit-text-size-adjust:none;white-space: nowrap;">Activate</a>
+                                      <!--[if mso]>
+                                          </center>
+                                          </v:roundrect>
+                                      <![endif]-->
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="5" height="30"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" height="30" style="display: block;" /></td>
+                            </tr>
+                            <tr>
+                              <td width="20" height="20" valign="bottom" class="corner">
+                                <img style="display: block;" width="20" height="20" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/cbl.png" />
+                              </td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td width="20" height="20" valign="bottom" class="corner">
+                                <img style="display: block;" width="20" height="20" src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/cbr.png" />
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height="75"><img src="https://ultia-bucket.s3.eu-west-1.amazonaws.com/activation-mail/spacer.png" height="75" style="display: block;" /></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </tbody> 
+            </table>
+          </div>
+          </body>
+          </html>`,
         },
         Text: {
           Charset: "UTF-8",
@@ -39,8 +265,10 @@ const createSendEmailCommand = (toAddress, fromAddress, name) => {
 export const createUser = async (req, res) => {
   const userBody = req.body;
 
+  const token = jwt.sign(userBody, process.env.JWT_PRIVATE_KEY);
+
   const sendEmailCommand = createSendEmailCommand(
-    userBody.email, process.env.AWS_EMAIL_SENDER, userBody.fullname
+    userBody.email, process.env.AWS_EMAIL_SENDER, userBody.fullname, token
   );
 
   await User.findOne({ email: userBody.email }).then(user => {
@@ -49,29 +277,31 @@ export const createUser = async (req, res) => {
         error: 'Email is taken'
       });
     }
-    
-    const newUser = new User(userBody);
+
+    // const newUser = new User(userBody);
+    // try {
+    //   newUser.save();
+    //   res.status(201).json(newUser);
+    // } catch (error) {
+    //   res.status(409).json({
+    //     message: error.message,
+    //   });
+    // }
+
     try {
-      newUser.save();
-      res.status(201).json(newUser);
-    } catch (error) {
-      res.status(409).json({
-        message: error.message,
-      });
+      return sesClient.send(sendEmailCommand);
+    } catch (e) {
+      console.error("Failed to send email.", e);
+      return e;
     }
   });
 
 
 
 
- 
 
-  // try {
-  //   return await sesClient.send(sendEmailCommand);
-  // } catch (e) {
-  //   console.error("Failed to send email.", e);
-  //   return e;
-  // }
+
+
 
 
 };
