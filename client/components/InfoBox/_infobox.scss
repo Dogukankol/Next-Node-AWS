@@ -7,6 +7,8 @@
     display: flex;
     align-items: flex-start;
     line-height: 1;
+    color: $white;
+
   
   
     i {
@@ -16,6 +18,19 @@
         font-size: 24px;
         color: $yellow;
       }
+    }
+
+    &--error {
+      background: rgba($error, $alpha: 1);
+      border-color: $error;
+
+    }
+
+    &--success {
+      background: rgba($success, $alpha: 1);
+      border-color: $success;
+      
+
     }
   }
   

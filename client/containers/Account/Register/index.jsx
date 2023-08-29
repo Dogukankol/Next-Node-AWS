@@ -10,13 +10,13 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 
 import { Input, Button, Error, InfoBox } from '@/components'
 import { store } from '@/stores'
-import { createUser, selectExistsUser } from "@/stores/register/registerSlice";
+import { createUser, selectResponseStatus } from "@/stores/Account/accountSlice";
 
 
 
 export default function Register() {
     const dispatch = useDispatch();
-    const existsUser = useSelector(selectExistsUser);
+    const responseStatus = useSelector(selectResponseStatus);
 
     const formSchema = Yup.object({
         fullname: Yup.string()
@@ -40,18 +40,26 @@ export default function Register() {
 
     const onSubmit = (data) => {
         const hashedPassword = (crypto.AES.encrypt(data.password, process.env.NEXT_PUBLIC_ENV_CRYPTO_KEY).toString())
-        dispatch(createUser({
-            fullname: data.fullname,
-            email: data.email,
-            password: hashedPassword
-        }))
-        // reset();
+        try {
+            dispatch(createUser({
+                fullname: data.fullname,
+                email: data.email,
+                password: hashedPassword
+            }))
+        } catch (error) {
+            console.log("Test")
+        };
     }
 
     return (
         <div className='account-page'>
             <form onSubmit={handleSubmit(onSubmit)} className="form">
-                {existsUser && <InfoBox className="m-b-15" text="This mail already exists" icon={<InfoCircleOutlined />}> This mail already exists </InfoBox>}
+                {responseStatus && 
+                    responseStatus == process.env.NEXT_PUBLIC_ENV_AUTH_RESPONSE_STATUS_SUCCESS ? 
+                    <InfoBox className="m-b-15 infobox--success" text=" This mail has been successfully send" icon={<InfoCircleOutlined />}></InfoBox> :  
+                            responseStatus == process.env.NEXT_PUBLIC_ENV_AUTH_RESPONSE_STATUS_ERROR ? 
+                            <InfoBox className="m-b-15 infobox--error" text="This mail already exists" icon={<InfoCircleOutlined />}></InfoBox> : ""
+                }
                 <div className="form__group">
                     <Input label="Fullname" name="fullname" register={register} required className={errors.fullname ? "input--error" : ""} />
                     {errors.fullname && <Error text={errors.fullname?.message} />}

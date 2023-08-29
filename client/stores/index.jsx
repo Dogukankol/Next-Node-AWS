@@ -1,13 +1,17 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
-import registerReducer from './register/registerSlice'
+import accountReducer from './Account/accountSlice'
 
 export function createStore(preloadedState = {}) {
   const store = configureStore({
     reducer: {
-      register: registerReducer,
+      account: accountReducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+    middleware: [
+      ...getDefaultMiddleware({
+          serializableCheck: false
+      }),
+  ],
     preloadedState,
   });
 
