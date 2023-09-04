@@ -1,6 +1,6 @@
 /* eslint-disable */
 "use client"
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,13 +10,19 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 
 import { Input, Button, Error, InfoBox } from '@/components'
 import { store } from '@/stores'
-import { createUser, selectResponseStatus } from "@/stores/Account/accountSlice";
+import { createUser, selectMsgSuccess, selectMsgError, selectIsLogin } from "@/stores/Account/accountSlice";
 
 
 
 export default function Register() {
     const dispatch = useDispatch();
-    const responseStatus = useSelector(selectResponseStatus);
+    const msgSuccess = useSelector(selectMsgSuccess);
+    const msgError = useSelector(selectMsgError);
+    const isLogin = useSelector(selectIsLogin);
+
+    useEffect(() => {
+        isLogin && router.push("/")
+    }, [isLogin])
 
     const formSchema = Yup.object({
         fullname: Yup.string()
@@ -45,20 +51,21 @@ export default function Register() {
                 fullname: data.fullname,
                 email: data.email,
                 password: hashedPassword
-            }))
+            }));
+            reset();
         } catch (error) {
-            console.log("Test")
+            console.error(error)
         };
     }
 
     return (
         <div className='account-page'>
             <form onSubmit={handleSubmit(onSubmit)} className="form">
-                {responseStatus && 
-                    responseStatus == process.env.NEXT_PUBLIC_ENV_AUTH_RESPONSE_STATUS_SUCCESS ? 
-                    <InfoBox className="m-b-15 infobox--success" text=" This mail has been successfully send" icon={<InfoCircleOutlined />}></InfoBox> :  
-                            responseStatus == process.env.NEXT_PUBLIC_ENV_AUTH_RESPONSE_STATUS_ERROR ? 
-                            <InfoBox className="m-b-15 infobox--error" text="This mail already exists" icon={<InfoCircleOutlined />}></InfoBox> : ""
+                {
+                    msgSuccess ?
+                        <InfoBox className="m-b-15 infobox--success" text={msgSuccess} icon={<InfoCircleOutlined />}></InfoBox> :
+                        msgError ?
+                            <InfoBox className="m-b-15 infobox--error" text={msgError} icon={<InfoCircleOutlined />}></InfoBox> : ""
                 }
                 <div className="form__group">
                     <Input label="Fullname" name="fullname" register={register} required className={errors.fullname ? "input--error" : ""} />

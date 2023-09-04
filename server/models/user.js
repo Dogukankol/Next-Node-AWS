@@ -4,6 +4,10 @@ const userSchema = mongoose.Schema({
   fullname: String,
   email: String,
   password: String,
+  role: {
+    type: String,
+    default: 'member'
+  },
   createdAt: {
     type: Date,
     default: new Date(),
