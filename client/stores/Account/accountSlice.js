@@ -6,7 +6,7 @@ import { authenticate } from "@/helpers/auth";
 const initialState = {
   msgSuccess: "",
   msgError: "",
-  isLogin: localStorage.getItem("user") ? true : false,
+  isLogin: false,
 }
 
 export const createUser = createAsyncThunk("account/register", async (data, {rejectWithValue}) => {

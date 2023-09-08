@@ -33,7 +33,6 @@ function Header() {
 
     function handleLogout(e) {
         logout();
-        dispatch(setLoginState(false))
         router.refresh();
     }
     return (
@@ -48,7 +47,7 @@ function Header() {
                     }
                 </nav>
                 <div className='account'>
-                    {!isLogin ?
+                    {!isAuth() ?
                         <>
                             <Link href="/account/login" ><Button text="Login" suffix="m-r-5" secondary small /></Link>
                             <Link href="/account/register" ><Button text="Register" small /></Link>
