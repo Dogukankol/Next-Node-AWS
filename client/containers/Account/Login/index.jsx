@@ -22,10 +22,10 @@ function Register() {
     const msgError = useSelector(selectMsgError);
     const isLogin = useSelector(selectIsLogin);
 
-    useEffect(() => {
-        isLogin && router.push("/")
-    }, [isLogin])
-    
+    // useEffect(() => {
+    //     isLogin && router.push("/");
+    // }, [])
+
     const formSchema = Yup.object({
         email: Yup.string()
             .email('Enter a valid email')
@@ -47,7 +47,12 @@ function Register() {
                 password: hashedPassword
             }));
 
-            isLogin ? router.push("/") : "";
+            console.log(isAuth())
+
+            setTimeout(() => {
+                isAuth() ? isAuth().role == "admin" ? router.push("/admin") : router.push("/") : "";
+            }, 500);
+
         } catch (error) {
             console.error(error)
         }
