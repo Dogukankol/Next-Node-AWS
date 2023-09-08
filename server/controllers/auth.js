@@ -72,7 +72,8 @@ export const login = async (req, res) => {
         const { _id, name, email, role } = user;
         return res.json({
           token,
-          user: { _id, name, email, role }
+          user: { _id, name, email, role },
+          success: "Successfully logged in. You are being redirected"
         });
       } else {
         res.status(400).json({
