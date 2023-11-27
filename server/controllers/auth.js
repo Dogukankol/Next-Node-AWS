@@ -3,6 +3,8 @@ import CryptoJS from 'crypto-js';
 import User from "../models/user.js";
 import { sesClient } from "../libs/sesClient.js";
 import { registerEmail } from '../helpers/emailTemplate.js'
+import { expressjwt }  from "express-jwt";
+
 
 
 export const createUser = async (req, res) => {
@@ -87,3 +89,42 @@ export const login = async (req, res) => {
     }
   })
 }
+
+export const requireSignin = expressjwt({secret: process.env.JWT_PRIVATE_KEY});
+
+export const authMiddleware = (req, res, next) => {
+  const authUserId = req.user._id;
+  User.findOne({_id: authUserId}).then((err,user) => {
+    if(err || !user) {
+      return res.status(400).json({
+        error: "User doesn't exist"
+      });
+    }
+
+    req.profile = user;
+    next();
+  })
+};
+
+
+export const adminMiddleware = (req, res, next) => {
+  const adminUserId = req.user._id;
+  User.findOne({ _id: adminUserId }).then((err, user) => {
+      if (err || !user) {
+          return res.status(400).json({
+              error: "User doesn't exists"
+          });
+      }
+
+      if (user.role !== 'admin') {
+          return res.status(400).json({
+              error: 'Only accounts with the Admin role can access this field. Access denied. Access denied'
+          });
+      }
+
+      req.profile = user;
+      next();
+  });
+};
+
+
